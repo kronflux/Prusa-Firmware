@@ -1334,14 +1334,14 @@ create_multi_firmware()
         if [ "$MOTHERBOARD" = "BOARD_EINSY_1_0a" ]; then
             echo "$(tput setaf 2)Copying multi language firmware for MK3/Einsy board to PF-build-hex folder$(tput sgr 0)"
             # End of "lang.bin" for MK3 and MK3S copy
-            cp -f Firmware-intl.hex $SCRIPT_PATH/../$OUTPUT_FOLDER/$OUTPUT_FILENAME.hex
+            cp -f Firmware.hex $SCRIPT_PATH/../$OUTPUT_FOLDER/$OUTPUT_FILENAME.hex
             cp -f $BUILD_PATH/Firmware.ino.elf $SCRIPT_PATH/../$OUTPUT_FOLDER/$OUTPUT_FILENAME.elf
         else
             #Search for created firmware languages
-            langs=$(find Firmware-intl-en_*.hex | cut -d "_" -f2 | cut -d "." -f1)
+            langs=$(find Firmware-en_*.hex | cut -d "_" -f2 | cut -d "." -f1)
             #Copy found firmware_*.hex files
                 for la in $langs; do
-                    cp -f Firmware-intl-en_$la.hex $SCRIPT_PATH/../$OUTPUT_FOLDER/$OUTPUT_FILENAME-$la.hex
+                    cp -f Firmware-en_$la.hex $SCRIPT_PATH/../$OUTPUT_FOLDER/$OUTPUT_FILENAME-$la.hex
                 done
             cp -f $BUILD_PATH/Firmware.ino.elf $SCRIPT_PATH/../$OUTPUT_FOLDER/$OUTPUT_FILENAME.elf
             echo "$(tput setaf 2)Zip multi language firmware for MK2.5/miniRAMbo board to PF-build-hex folder$(tput sgr 0)"

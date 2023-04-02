@@ -2,31 +2,33 @@
 #define CONFIGURATION_PRUSA_H
 
 #include <limits.h>
-
 #include "printers.h"
 /*------------------------------------
  GENERAL SETTINGS
  *------------------------------------*/
 
 // Printer revision
-#define PRINTER_TYPE PRINTER_MK3
-#define PRINTER_NAME PRINTER_MK3_NAME
-#define PRINTER_NAME_ALTERNATE PRINTER_MK3S_NAME //the other similar printer to this.
-#define PRINTER_MMU_TYPE PRINTER_MK3_MMU2
-#define PRINTER_MMU_NAME PRINTER_MK3_MMU2_NAME
-#define FILAMENT_SIZE "1_75mm_MK3"
+#define PRINTER_TYPE PRINTER_MK3S
+#define PRINTER_NAME PRINTER_MK3S_NAME
+#define PRINTER_NAME_ALTERNATE PRINTER_MK3_NAME //the other similar printer to this.
+#define PRINTER_MMU_TYPE PRINTER_MK3S_MMU2
+#define PRINTER_MMU_NAME PRINTER_MK3S_MMU2_NAME
+#define FILAMENT_SIZE "1_75mm_MK3S"
 #define NOZZLE_TYPE "E3Dv6full"
 
 // Developer flag
 #define DEVELOPER
 
 // Printer name
-#define CUSTOM_MENDEL_NAME "Prusa i3 MK3"
+#define CUSTOM_MENDEL_NAME "Prusa i3 MK3S"
 
 // Electronics
 #define MOTHERBOARD BOARD_EINSY_1_0a
 #define STEEL_SHEET
 #define HAS_SECOND_SERIAL_PORT
+
+// PSU
+#define PSU_Delta                                 // uncomment if DeltaElectronics PSU installed
 
 
 // Uncomment the below for the E3D PT100 temperature sensor (with or without PT100 Amplifier)
@@ -42,7 +44,7 @@
 
 // Steps per unit {X,Y,Z,E}
 //#define DEFAULT_AXIS_STEPS_PER_UNIT   {100,100,3200/8,140}
-#define DEFAULT_AXIS_STEPS_PER_UNIT   {100,100,3200/8,280}
+#define DEFAULT_AXIS_STEPS_PER_UNIT   {100,100,3200/8,415}
 //#define DEFAULT_AXIS_STEPS_PER_UNIT   {100,100,3200/8,560}
 
 // Endstop inverting
@@ -122,7 +124,7 @@
 
 //Crash detection
 #define CRASHDET_TIMER 45 //seconds
-#define CRASHDET_COUNTER_MAX 3 
+#define CRASHDET_COUNTER_MAX 3
 
 // New XYZ calibration
 #define NEW_XYZCAL
@@ -151,7 +153,7 @@
 
 // Filament sensor
 #define FILAMENT_SENSOR
-#define FILAMENT_SENSOR_TYPE FSENSOR_PAT9125
+#define FILAMENT_SENSOR_TYPE FSENSOR_IR_ANALOG
 #define FSENSOR_PROBING
 
 // Backlash - 
@@ -180,15 +182,15 @@
 #define DEBUG_DCODES //D codes
 #define DEBUG_STACK_MONITOR        //Stack monitor in stepper ISR
 //#define DEBUG_CRASHDET_COUNTERS  //Display crash-detection counters on LCD
-//#define DEBUG_RESUME_PRINT       //Resume/save print debug enable 
-//#define DEBUG_UVLO_AUTOMATIC_RECOVER // Power panic automatic recovery debug output 
+//#define DEBUG_RESUME_PRINT       //Resume/save print debug enable
+//#define DEBUG_UVLO_AUTOMATIC_RECOVER // Power panic automatic recovery debug output
 //#define DEBUG_DISABLE_XMINLIMIT  //x min limit ignored
 //#define DEBUG_DISABLE_XMAXLIMIT  //x max limit ignored
 //#define DEBUG_DISABLE_YMINLIMIT  //y min limit ignored
 //#define DEBUG_DISABLE_YMAXLIMIT  //y max limit ignored
 //#define DEBUG_DISABLE_ZMINLIMIT  //z min limit ignored
 //#define DEBUG_DISABLE_ZMAXLIMIT  //z max limit ignored
-#define DEBUG_DISABLE_STARTMSGS //no startup messages 
+#define DEBUG_DISABLE_STARTMSGS //no startup messages
 //#define DEBUG_DISABLE_MINTEMP   //mintemp error ignored
 //#define DEBUG_DISABLE_SWLIMITS  //sw limits ignored
 //#define DEBUG_DISABLE_LCD_STATUS_LINE  //empty four lcd line
@@ -220,7 +222,7 @@
 
 #define TMC2130_USTEPS_XY   16        // microstep resolution for XY axes
 #define TMC2130_USTEPS_Z    16        // microstep resolution for Z axis
-#define TMC2130_USTEPS_E    32        // microstep resolution for E axis
+#define TMC2130_USTEPS_E    16        // microstep resolution for E axis
 #define TMC2130_INTPOL_XY   1         // extrapolate 256 for XY axes
 #define TMC2130_INTPOL_Z    1         // extrapolate 256 for Z axis
 #define TMC2130_INTPOL_E    1         // extrapolate 256 for E axis
@@ -354,6 +356,8 @@
 #define EXTRUDER_2_AUTO_FAN_PIN   -1
 #define EXTRUDER_AUTO_FAN_TEMPERATURE 50
 #define EXTRUDER_AUTO_FAN_SPEED   255  // == full speed
+#define EXTRUDER_ALTFAN_DETECT
+#define EXTRUDER_ALTFAN_SPEED_SILENT 128
 
 #define FANCHECK_AUTO_PRINT_FAN_THRS 70 //[RPS] - Used during selftest to identify swapped fans automatically
 #define FANCHECK_AUTO_FAIL_THRS 20 //[RPS] - Used during selftest to identify a faulty fan
@@ -365,12 +369,12 @@
 
 // Load filament commands
 #define LOAD_FILAMENT_0 "M83"
-#define LOAD_FILAMENT_1 "G1 E70 F400"
+#define LOAD_FILAMENT_1 "G1 E80 F400"
 #define LOAD_FILAMENT_2 "G1 E40 F100"
 
 // Unload filament commands
 #define UNLOAD_FILAMENT_0 "M83"
-#define UNLOAD_FILAMENT_1 "G1 E-80 F7000"
+#define UNLOAD_FILAMENT_1 "G1 E-95 F7000"
 
 /*------------------------------------
  CHANGE FILAMENT SETTINGS
@@ -383,15 +387,15 @@
 #define FILAMENTCHANGE_YPOS 0
 #define FILAMENTCHANGE_ZADD 2
 #define FILAMENTCHANGE_FIRSTRETRACT -2
-#define FILAMENTCHANGE_FINALRETRACT -80
+#define FILAMENTCHANGE_FINALRETRACT -95
 
-#define FILAMENTCHANGE_FIRSTFEED 70 //E distance in mm for fast filament loading sequence used used in filament change (M600)
-#define FILAMENTCHANGE_FINALFEED 25 //E distance in mm for slow filament loading sequence used used in filament change (M600) and filament load (M701) 
+#define FILAMENTCHANGE_FIRSTFEED 80 //E distance in mm for fast filament loading sequence used used in filament change (M600)
+#define FILAMENTCHANGE_FINALFEED 25 //E distance in mm for slow filament loading sequence used used in filament change (M600) and filament load (M701)
 #define FILAMENTCHANGE_RECFEED 5
 
 #define FILAMENTCHANGE_XYFEED 50
 #define FILAMENTCHANGE_EFEED_FIRST 20 // feedrate in mm/s for fast filament loading sequence used in filament change (M600)
-#define FILAMENTCHANGE_EFEED_FINAL 3.3f // feedrate in mm/s for slow filament loading sequence used in filament change (M600) and filament load (M701) 
+#define FILAMENTCHANGE_EFEED_FINAL 3.3f // feedrate in mm/s for slow filament loading sequence used in filament change (M600) and filament load (M701)
 //#define FILAMENTCHANGE_RFEED 400
 #define FILAMENTCHANGE_RFEED 7000 / 60
 #define FILAMENTCHANGE_EXFEED 2
@@ -411,8 +415,8 @@
 #define TEMP_RUNAWAY_EXTRUDER_TIMEOUT 45
 
 // model-based temperature check
-#define TEMP_MODEL 1              // enable model-based temperature checks
-#define TEMP_MODEL_DEBUG 1        // extended runtime logging
+#define TEMP_MODEL 1          // enable model-based temperature checks
+#define TEMP_MODEL_DEBUG 1    // extended runtime logging
 
 #define TEMP_MODEL_CAL_C_low 5    // C estimation lower limit
 #define TEMP_MODEL_CAL_C_high 20  // C estimation upper limit
@@ -427,7 +431,7 @@
 #define TEMP_MODEL_CAL_T_low 50   // Default calibration cooling temperature (C)
 #define TEMP_MODEL_CAL_T_high 230 // Default calibration working temperature (C)
 
-#define TEMP_MODEL_Ta_corr -7     // Default ambient temperature correction
+#define TEMP_MODEL_Ta_corr -7 // Default ambient temperature correction
 
 #include "temp_model/e3d_v6.h"
 #define TEMP_MODEL_DEFAULT E3D_V6 // Default model parameters
@@ -662,8 +666,8 @@
 // we just need to shift to the nearest fullstep, but we need a move which is at least
 // "dropsegments" steps long. All the above rules still need to apply.
 #define UVLO_TINY_Z_AXIS_SHIFT 0.16
-// If power panic occured, and the current temperature is higher then target temperature before interrupt minus this offset, print will be recovered automatically. 
-#define AUTOMATIC_UVLO_BED_TEMP_OFFSET 5 
+// If power panic occured, and the current temperature is higher then target temperature before interrupt minus this offset, print will be recovered automatically.
+#define AUTOMATIC_UVLO_BED_TEMP_OFFSET 5
 
 #define HEATBED_V2
 
@@ -671,7 +675,7 @@
 
 //#define SUPPORT_VERBOSITY
 
-#define MMU_CONFIG_FILE "mmu2/variants/config_MMU2.h"
+#define MMU_CONFIG_FILE "mmu2/variants/config_MMU2S.h"
 
 #define MMU_FILAMENT_COUNT 5
 
@@ -679,6 +683,14 @@
 #define MMU_HWRESET
 #define MMU_DEBUG //print communication between MMU and printer on serial
 #define MMU_HAS_CUTTER
+
+// This is experimental feature requested by our test department.
+// There is no known use for ordinary user. If enabled by this macro
+// and enabled from printer menu (not enabled by default). It cuts filament
+// every time when switching filament from gcode. MMU_HAS_CUTTER needs to be
+// defined.
+
+//#define MMU_ALWAYS_CUT
 #define MMU_IDLER_SENSOR_ATTEMPTS_NR 21 //max. number of attempts to load filament if first load failed; value for max bowden length and case when loading fails right at the beginning
 
 // MMU Error pause position
